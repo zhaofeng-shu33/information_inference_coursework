@@ -1,0 +1,125 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\usepackage{amsmath}
+\input{iidef}
+\begin{document}
+\courseheader
+\newcounter{hwcnt}
+\setcounter{hwcnt}{7} % set to the times of Homework
+
+\begin{center}
+  \underline{\bf Homework \thehwcnt} \\
+\end{center}
+\begin{flushleft}
+  赵丰\hfill
+  \today
+\end{flushleft}
+\hrule
+
+\vspace{2em}
+
+\flushleft
+\rule{\textwidth}{1pt}
+\begin{itemize}
+\item {\bf Acknowledgments: \/} 
+  This coursework referes to wikipedia: \small{\url{https://en.wikipedia.org}}.
+
+\item {\bf Collaborators: \/}
+  I finish this coursework by myself.
+\end{itemize}
+\rule{\textwidth}{1pt}
+
+\vspace{2em}
+
+I use \texttt{enumerate} to generate answers for each question:
+
+\begin{enumerate}[label=\thehwcnt.\arabic*.]
+  \setlength{\itemsep}{3\parskip}
+
+  \item 
+    \begin{enumerate}[label=(\alph*)]
+  \item 
+    $D(q||p) \geq q(M)\log\frac{q(M)}{p(M)}=\infty$
+    所以$D(q||p)=\infty$
+  \item 因为 $\displaystyle\lim_{x\to 0+} x\log(x)=0$，
+   $D(p||q) =\displaystyle\sum_{y=0}^{M-1} p(y)\log\frac{p(y)}{q(y)}<\infty$
+  \item 运用 Lagrange 乘子法可以求出 $p(k)=t q(k),k=0,\dots,M-1$,通过归一化条件求出
+  $t=\frac{1}{Q(M-1)}$, 另外由函数的凸性可得局部最小为全局最小，从而
+  \[
+   p^*(k)=\frac{q(k)}{Q(M-1)},k=0,\dots,M-1 \textrm{ and } D(p^* || q )=\log\frac{1}{Q(M-1)}
+  \]
+   另解：
+   \begin{align*}
+   D(p||q) = & \sum_{y=0}^{M-1} p(y) \log \frac{p(y)}{\frac{q(y)}{Q(M-1)}Q(M-1)}\\
+           = & \sum_{y=0}^{M-1} D\left(p|| \frac{q(y)}{Q(M-1)} 1_{y<M}\right)+\log \frac{1}{Q(M-1)}
+   \end{align*}
+  \item 对
+  \[
+   f(p)=\sum_{m=0}^{\infty} p_m \log \frac{p_m}{q_m} -\lambda (
+   \sum_{m=0}^{\infty} p_m -1) -\mu (\sum_{m=M}^{\infty} p_m -\epsilon)
+  \]
+  运用 Lagrange 乘子法求出
+  \begin{align*}
+    p^*_k =  t q_k,& m \leq M-1 \\
+    p^*_k =  t' q_k,& m \geq M
+   \end{align*}
+   由归一化条件和$\mathcal{P}_{\epsilon}$的性质可得
+  \begin{align*}
+    t = &  \frac{1-\epsilon}{Q(M-1)} \\
+    t'= &  \frac{\epsilon}{1-Q(M-1)}
+   \end{align*}
+   从而得到 $D(p^*_{\epsilon}||q)=(1-\epsilon)\log t+\epsilon\log t'$
+   并且有：
+   \[
+    \lim_{\epsilon\to 0+}D(p^*_{\epsilon}||q)=D(p^*||q)
+   \]
+   \item $t(y)=1(y\geq M),c=\epsilon$
+   \item $p_{\epsilon}^*(y) = q(y)\exp(xt(y)-\alpha(x))\Rightarrow e^x = \frac{t'}{t}$
+   所以 $$ x=\log\frac{\epsilon Q(M-1)}{(1-\epsilon)(1-Q(M-1))}$$
+   \end{enumerate}
+   \item
+   \begin{enumerate}[label=(\alph*)]
+   \item 我们证明$D(p_{\rvx,\rvy}||q_{\rvx}q_{\rvy})\geq D(p_{\rvx,\rvy}||p_{\rvx}p_{\rvy})$
+   \begin{align*}
+   D(p_{\rvx,\rvy}||q_{\rvx}q_{\rvy}) - D(p_{\rvx,\rvy}||p_{\rvx}p_{\rvy}) = & \sum_{x,y}p_{\rvx,\rvy}(x,y)\log\frac{p_{\rvx}(x)p_{\rvy}(y)}{q_{\rvx}(x)q_{\rvy}(y)}\\
+   = & \sum_{x,y} p_{\rvx,\rvy}(x,y) \log\frac{p_{\rvx}(x)}{q_{\rvx}(x)} + \sum_{\rvx,\rvy} p_{\rvx,\rvy}(x,y) \log\frac{p_{\rvy}(y)}{q_{\rvy}(y)}\\
+   = & \sum_{x} p_{\rvx}(x) \log\frac{p_{\rvx}(x)}{q_{\rvx}(x)} + \sum_{y} p_{\rvy}(y) \log\frac{p_{\rvy}(y)}{q_{\rvy}(y)} \\
+   = & D(p_{\rvx} || q_{\rvx}) + D(p_{\rvy} || q_{\rvy})\geq 0
+   \end{align*}
+   当 $q_x=p_x,q_y=p_y$时取等号，因此 $\min D(p_{\rvx,\rvy}||q_{\rvx}q_{\rvy})=I(\rvx,\rvy)$
+   \item 注意到 $p=0 \Rightarrow q=0,$ 否则$D(q||p_{\rvx,\rvy})=\infty$。
+   所以$q_{\rvx}(4)q_{\rvy}(k)=0,k=1,2,3$,若$q_{\rvx}(4)\neq 0$,则$q_{\rvy}=(0,0,0,1),q_{\rvx}=(0,0,0,1)\Rightarrow D(q||p_{\rvx,\rvy})=\log 4$;
+   若$q_{\rvx}(4)= 0\Rightarrow q_{\rvy}(4)=0$,因为$q_{\rvx}(3)q_{\rvy}(k)=0,k=1,2$，若$q_{\rvx}(3)\neq 0$，则$q_{\rvy}=(0,0,1,0),q_{\rvx}=(0,0,1,0)\Rightarrow D(q||p_{\rvx,\rvy})=\log 4$;若$q_{\rvx}(3)=0\Rightarrow q_{\rvy}(3)=0$。
+   为记号简便，设$q_{\rvx}(1)=a,q_{\rvy}(1)=b$，则只需极小化下面的函数
+\[
+f(a,b)=ab\log(8ab)+(1-a)(1-b)\log(8(1-a)(1-b))+a(1-b)\log(8a(1-b))+b(1-a)\log(8b(1-a))
+\]
+化简得：
+\[
+f(a,b)=  \log 8 + a\log a +(1-a)\log(1-a) + b\log b +(1-b)\log(1-b)
+\]
+当$a=b=\frac{1}{2}$时，$f(a,b)$取得最小值$\log 2$
+而(a)中的解使得$D(q||p_{\rvx,\rvy})=\infty$。
+   \end{enumerate}
+
+   
+  \end{enumerate}
+\end{document}
+
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:

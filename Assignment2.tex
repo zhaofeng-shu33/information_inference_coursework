@@ -1,0 +1,174 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\input{iidef}
+\begin{document}
+\courseheader
+
+\newcounter{hwcnt}
+\setcounter{hwcnt}{2} % set to the times of Homework
+
+\begin{center}
+  \underline{\bf Homework \thehwcnt} \\
+\end{center}
+\begin{flushleft}
+  赵丰\hfill
+  \today
+\end{flushleft}
+\hrule
+
+\vspace{2em}
+
+\flushleft
+\rule{\textwidth}{1pt}
+\begin{itemize}
+\item {\bf Acknowledgments: \/} 
+  This coursework referes to wikipedia: \small{\url{https://en.wikipedia.org}}.
+
+\item {\bf Collaborators: \/}
+  I finish this coursework by myself.
+\end{itemize}
+\rule{\textwidth}{1pt}
+
+\vspace{2em}
+
+I use \texttt{enumerate} to generate answers for each question:
+
+\begin{enumerate}[label=\thehwcnt.\arabic*.]
+  \setlength{\itemsep}{3\parskip}
+
+  \item 
+    \begin{enumerate}[label=(\alph*)]
+    \item 
+    \begin{enumerate}[label=\roman*.]
+      \item 
+         对向量值随机变量证明全（协）方差公式。
+         用到$\E[\urvx]=\E[\E[\urvx|\rvy]]$以及
+         $\E[\urvx\urvx^\TT]=\E[\E[\urvx|\rvy]]$
+        \begin{align*}
+        \Cov(\urvx) = & \E[(\urvx-\E[\urvx])(\urvx-\E[\urvx])^\TT] \\    
+                    = & \E[\urvx\urvx^\TT]-\E[\urvx]\E[\urvx]^\TT\\
+                    = & \E[\E[\urvx\urvx^\TT|\rvy]]-\E[\E[\urvx|\rvy]]\E[\E[\urvx|\rvy]]^\TT\\
+                    = & \E[\Cov[\urvx|\rvy]+\E[\urvx|\rvy]\E[\urvx|\rvy]^\TT]-\E[\E[\urvx|\rvy]]\E[\E[\urvx|\rvy]]^\TT\\
+                    = & \E[\Cov[\urvx|\rvy]]+\Cov[\E[\urvx|\rvy]]\\       
+        \end{align*}
+        所以
+        \begin{equation}
+        \E[\rvx|\rvy]=\E[\E[\rvx|\rvy \rvz]|\rvy]
+        \end{equation}
+
+      \item 
+        若$\exists \v{c}\in \mathbb{R}^k,\v{c}\neq \v{0},d\in \mathbb{R}$使得$\v{c}^\TT \urvx =d$.
+        则 $\v{c}^\TT \E[\urvx] =d$且有$\v{c}^\TT \urvx \urvx^\TT \v{c} =d^2$，取期望得
+        $\v{c}^\TT \E[\urvx \urvx^\TT] \v{c} =d^2$
+        \begin{align*}
+        \v{c}^\TT \Cov(\urvx)\v{c} = & \v{c}^\TT\E[\urvx\urvx^\TT]\v{c}-\v{c}^\TT\E[\urvx]\E[\urvx]^\TT\v{c}\\
+        = & \v{c}^\TT\E[\urvx\urvx^\TT]\v{c}-\v{c}^\TT\E[\urvx]\E[\urvx]^\TT\v{c}\\
+        = & 0
+        \end{align*}
+        因为$\Cov(\urvx)$是半正定矩阵，从上式知其有一个特征值为零。从而其行列式为0。
+        
+        反之，若$\det[\Cov(\urvx)]=0$,则$\exists \v{c}\in \mathbb{R}^k,\v{c}\neq \v{0}$，使得
+        $\v{c}^\TT \Cov(\urvx)\v{c}=0$,设$\rvy=\v{c}^\TT(\urvx-\E[\urvx])$
+        即 $\E[\rvy^2]=0$,从而$\rvy=0$,取$d=\v{c}^\TT\E[\urvx]$,则有$\v{c}^\TT\urvx=d$
+      
+    \end{enumerate}
+    \item 
+      \begin{enumerate}[label=\roman*.]
+        \item
+            \begin{align*}
+            \MSE(\v{\alpha}) = & \sum_{i=1}^k [(1-\v{\alpha}_i)^2+\sum_{\substack{j=1\\j\neq i}}^k \v{\alpha}_j^2]P_y(i) \\
+            = & 1 \sum_{i=1}^k (- 2\v{\alpha}_i +\sum_{j=1}^k \v{\alpha}_j^2) P_y(i)\\
+            = & 1- 2 \sum \v{\alpha}_i P_y(i) + \sum_{j=1}^k (\sum_{i=1}^k P_y(i))\v{\alpha}_j^2\\
+            = & 1- 2 \sum_{i=1}^k (\v{\alpha}_i^2-2\v{\alpha}_i P_y(i))
+            \end{align*}
+        根据二次函数极值的性质，当$\v{\alpha}_i=P_y(i)$时上式最小。即题中所给$\v{P}_y(\cdot)$是MMSE估计量。
+        \item
+            类似上次作业，只需对给定的$\urvx=\v{x}_0$极小化条件概率下的误差期望:
+            \begin{equation}
+            \E_{\urvy|\urvx=\v{x}_0}[||\urvy-\v{f}(\urvx=\v{x}_0)||_2^2 |]            
+            \end{equation}
+            此时$\v{f}(\urvx=\v{x}_0)$视为常数，由前一小问结论，当
+            $\v{f}(\urvx=\v{x}_0)=\v{P}_{\rvy}(\cdot|\urvx=\v{x}_0)$时上式最小，所以MMSE估计器是
+            $\v{P}_{\rvy}(\cdot|\urvx)$
+                   
+      \end{enumerate}      
+    \end{enumerate}
+  \item 
+  \begin{enumerate}[label=(\alph*)]
+  \item
+    $\Var(\v{v}^\TT \urvx)=\v{v}^\TT\Cov(\v{x})\v{v}$
+    设$U^\TT=(\v{u}_1,\v{u}_2,\dots,\v{u}_d)$,则$\v{u}_i$是$\sigma_i$对应的特征向量。
+    由Rayleigh 商的性质可说明$\v{v}_i=\v{u}_i$。设$\v{v}=\sum_{i=1}^d \alpha_i \v{u}_i$
+    \begin{align}
+    \Var(\v{v}^\TT \urvx)=& \frac{\v{v}^\TT\Cov(\v{x})\v{v}}{||\v{v}||^2}\nonumber\\
+    = & \frac{(\sum_{i=1}^d \alpha_i \v{u}_i)^\TT(\sum_{i=1}^d \sigma_i\alpha_i \v{u}_i)}{(\sum_{i=1}^d \alpha_i \v{u}_i)^\TT(\sum_{i=1}^d \alpha_i \v{u}_i)}\nonumber\\
+    = & \frac{\sum_{i=1}^d \alpha^2_i \sigma_i}{\sum_{i=1}^d \alpha^2_i}\label{eq:RayleighQuotient}
+    \end{align}
+    注意到上式是$\sigma_1,\dots,\sigma_d$的凸组合，在无正交性约束的情况下取$\alpha_i=\delta_{1i}$使得$\sigma_1$前的系数最大即得到上式的最大值，
+    此时
+    \begin{equation}
+    \v{v}_1=\argmax_{\v{v}:||\v{v}||=1} \Var(\v{v}^\TT \urvx)=\v{u}_1
+    \end{equation}
+    若加入正交性约束$\v{v}\perp\v{u}_1$,则$\alpha_1=0$,则在\eqref{eq:RayleighQuotient}式中相当于$\sigma_2,\dots,\sigma_d$的凸组合。
+    因此取$\alpha_i=\delta_{2i}$使得$\sigma_2$前的系数最大得到有正交性约束$\v{v}\perp\v{u}_1$情形下的最大值。即推出$\v{v}_2=\v{u}_2$
+    如此递推下去即可证明$\v{v}_i=\v{u}_i$。
+  \item
+    注意到$\Cov(\rvy_i,\rvy_j)=\v{v}_i^T \Cov(\urvx)\v{v}_j=\sigma_j \delta_{ij}$
+    因此$\Cov(\urvy)=\Sigma$。
+  \item
+    \begin{enumerate}[label=\roman*.]
+        \item $\urvy$也是多维正态分布，$\E[\urvy]=0$,其联合概率
+        密度函数可以写为：
+        \begin{equation}
+            p_{\urvy}(\v{y})=\prod_{i=1}^d \frac{1}{\sqrt{2\pi \sigma_i^2}}\exp(-\frac{y_i^2}{2\sigma_i^2})
+        \end{equation}
+        \item 由于$\urvy$的各分量不相关，所以彼此独立。
+    \end{enumerate}
+  \end{enumerate}  
+  \item  
+  \begin{enumerate}[label=(\alph*)]
+    \item 
+    \begin{equation}K_{\rvx}=
+        \begin{bmatrix}
+         \sigma^2 & \rho \sigma \\
+         \rho \sigma & \sigma^2
+        \end{bmatrix}
+    \end{equation}
+    \begin{equation}K_{\rvy}=A K_{\rvx} A^\TT
+        \begin{bmatrix}
+         \sigma^2 & \rho_{\rvx} \sigma^2 \\
+         \rho_{\rvx} \sigma^2 & \sigma^2
+        \end{bmatrix}=\sigma^2\diag\{1-\rho_{\rvx}^2,1\}
+    \end{equation}
+    \item 由$K_{\rvy}$是对角阵以及$\urvy$服从二元正态分布可知$\rvy_1 \independent \rvy_2$
+    所以$\rvy_1 \independent g(\rvy_2)$,即$\Cov(\rvy_1,g(\rvy_2))=0$,从而结论得证。
+    \item 
+    为证明 $\E[\rvy_1^2]\leq \E[(\rvy_1 + \rho_x \rvy_2-g(\rvy_2))^2]$
+    因为$\rvy_1$与$\rho_x \rvy_2-g(\rvy_2)$相互独立，故上式右端为$\E[\rvy_1^2]+\E[(\rho_x \rvy_2-g(\rvy_2))^2]$,
+    所以不等式成立。
+    \end{enumerate}
+  \item 上机作业  
+  \item Thanks to 陆石, who gives me this template.
+  
+
+  \end{enumerate}
+
+\end{document}
+\begin{equation}
+\end{equation}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:

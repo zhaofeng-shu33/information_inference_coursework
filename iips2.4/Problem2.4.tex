@@ -1,0 +1,86 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\input{../iidef}
+\begin{document}
+\courseheader
+
+\newcounter{hwcnt}
+\setcounter{hwcnt}{2} % set to the times of Homework
+
+\begin{center}
+  \underline{\bf Homework \thehwcnt} \\
+\end{center}
+\begin{flushleft}
+  赵丰\hfill
+  \today
+\end{flushleft}
+\hrule
+
+\vspace{2em}
+
+\flushleft
+\rule{\textwidth}{1pt}
+\begin{itemize}
+\item {\bf Acknowledgments: \/} 
+  This coursework referes to wikipedia: \small{\url{https://en.wikipedia.org}}.
+
+\item {\bf Collaborators: \/}
+  I finish this coursework by myself.
+\end{itemize}
+\rule{\textwidth}{1pt}
+
+\vspace{2em}
+
+I use \texttt{enumerate} to generate answers for each question:
+
+\begin{enumerate}[label=\thehwcnt.\arabic*.]
+  \setlength{\itemsep}{3\parskip}
+  \setcounter{enumi}{3}
+  \item 
+    \begin{enumerate}[label=(\alph*)]
+    \item 见相关代码
+    \item 
+        \begin{enumerate}[label=\roman*.]
+        \item $\urvw$与$\urvx$分布相同。
+        \item 见相关代码
+        \item 计算结果表明$\E[\urvw^\TT\urvz]\approx 0$,即$\urvw$与$\urvz$是彼此独立的。
+        $\E[\urvx^\TT\urvz]=\E[\urvz^\TT C \urvz]$明显大于零。
+        \end{enumerate}   
+    \item 见相关代码
+    \item 
+        \begin{enumerate}[label=\roman*.]
+        \item $\rvx_1$在$\rvx_2=0$的条件下是高斯分布，由$\E[\rvx_1|\rvx_2]=\rho \rvx_2$知其均值为0，
+        由联合高斯条件分布的方差公式知方差为$(1-\rho^2)\sigma^2$
+        所以条件 PDF 为
+        \begin{equation}
+            p_{\rvx_1|\rvx_2}(x|0)=\frac{1}{\sqrt{2\pi(1-\rho^2)\sigma^2}}\exp(-\frac{x^2}{2(1-\rho^2)\sigma^2})
+        \end{equation}
+        \item 见相关代码
+        \item 见相关代码,仿真结果与理论结果一致。
+        \end{enumerate}       
+    \item 见相关代码
+    \end{enumerate}   
+  \item Thanks to 陆石, who gives me this template.
+  
+
+\end{enumerate}
+
+\end{document}
+\begin{equation}
+\end{equation}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:

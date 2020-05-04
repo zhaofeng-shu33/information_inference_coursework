@@ -1,0 +1,175 @@
+\documentclass{article}
+\usepackage{xeCJK}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{hyperref}
+\setCJKmainfont[AutoFakeBold]{SimSun}
+\usepackage{bm}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\MSE}{MSE}
+\DeclareMathOperator{\Cov}{Cov}
+
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+
+\begin{document}
+\title{第一次作业}
+\author{赵丰，2017310711}
+\maketitle
+\textbf{P1.1(a)i.}
+\begin{equation}
+\E[x|y]=\sum_{i} x_i\Pr(x=x_i|y)
+\end{equation}
+\begin{align*}
+\E[\E[x|yz]|y] = & \E((\sum_{i} x_i \Pr(x=x_i| yz))|y)\\
+=&\sum_j (\sum_{i} x_i \Pr(x=x_i| y,z=z_j))\Pr(z=z_j) \\
+=&\sum_i x_i(\sum_{j} \Pr(x=x_i| y,z=z_j))\Pr(z=z_j) \\
+=&\sum_i x_i(\sum_{j} \Pr(x=x_i,z=z_j| y))\\
+=&\sum_i x_i \Pr(x=x_i| y) \\
+\end{align*}
+所以
+\begin{equation}
+\E[x|y]=\E[\E[x|yz]|y]
+\end{equation}
+
+\textbf{P1.1(a)ii.}
+\begin{equation}
+g(y)\E[x|y]=\sum_{i} g(y)x_i\Pr(x=x_i|y)=\E[xg(y)|y]
+\end{equation}
+
+\textbf{P1.1(a)iii.}
+\begin{align*}
+\E[x\E[x|y]]=&\E\left[x\sum_{i} x_i\Pr(x=x_i|y)\right]\\
+=&\sum_{j,k}(x_j\sum_{i} x_i\Pr(x=x_i|y=y_k))\Pr(x=x_j,y=y_k)\\
+=&\sum_{i,j,k} x_i x_j \Pr(x=x_i|y=y_k)\Pr(x=x_j,y=y_k)
+\end{align*}
+\begin{align*}
+\E[(\E[x|y])^2]=&\E\left[(\sum_{i} x_i\Pr(x=x_i|y))^2\right]\\
+=&\sum_{k}(\sum_{i} x_i\Pr(x=x_i|y=y_k))^2 \Pr(y=y_k)\\
+=&\sum_{i,j,k} x_i x_j\Pr(x=x_i|y=y_k)\Pr(x=x_j|y=y_k)\Pr(y=y_k)\\
+=&\sum_{i,j,k} x_i x_j\Pr(x=x_i|y=y_k)\Pr(x=x_j,y=y_k)
+\end{align*}
+所以
+\begin{equation}
+\E[x\E[x|y]]=\E[(\E[x|y])^2]
+\end{equation}
+
+\textbf{P1.1(a)iv.}
+对离散型随机变量证明全方差公式(Law of Total Variance)
+用到全期望公式(Law of Total Expectation)：
+\begin{equation}
+\E[\E[x|y]]=\E[x]
+\end{equation}
+
+\begin{equation}
+\Var(x)=\sum_i (x_i-\E(x))^2\Pr(x=x_i)
+\end{equation}
+
+\begin{align*}
+\Var(x)=& \E[x^2]-(\E[x])^2\\
+=& \E[\E[x^2|y]]-(\E[\E[x|y]])^2\\
+=& \E[\Var[x|y]+(\E[x|y])^2]-(\E[\E[x|y]])^2\\
+=& \E[\Var[x|y]]+\Var[\E[x|y]]\\
+\end{align*}
+
+\textbf{P1.1(b)i.}
+
+\begin{equation}
+\E[(y-\alpha)^2]=\alpha^2-2\E[y]\alpha+\E[y]^2
+\end{equation}
+由二次函数极值的性质，当$\alpha=\E[y]$时 $\E[(y-\alpha)^2]$最小，
+此时$\MSE(\hat{y}=\E[y])=\Var(y)$
+
+\textbf{P1.1(b)ii.}
+\begin{equation}\label{eq:P11bii}
+\E[(y-\hat{y})^2]=\sum_{i}\left(\sum_j (y_j-\hat{y}(x_i))^2\Pr(y=y_j|x=x_i)\right)\Pr(x=x_i)
+\end{equation}
+故只需对每一个$\Pr(x=x_i)$，极小化
+\begin{equation}
+%\MSE(\hat{y})(x_i)=\argmin_{f:\mathcal{X}\rightarrow \mathbb{R}}
+\left(\sum_j (y_j-f(x_i))^2\Pr(y=y_j|x=x_i)\right)
+\end{equation}
+目标函数可化为如下形式:
+\begin{equation}
+\mathcal{F}(f)=f(x_i)^2-2\E[y|x=x_i]f(x_i)+c,f:\mathcal{X}\rightarrow \mathbb{R}
+\end{equation}
+
+由第一问结论:
+\begin{equation}
+%\MSE(\hat{y})(x_i)
+\argmin_{f:\mathcal{X}\rightarrow \mathbb{R}}\mathcal{F}(f)=\E[y|x=x_i]
+\end{equation}
+从而有
+\begin{equation}
+\argmin_{f:\mathcal{X}\rightarrow \mathbb{R}}\E[(y-f(x))^2]=\E[y|x]
+\end{equation}
+由\eqref{eq:P11bii}式得估计的MSE为
+\begin{equation}
+\MSE(\E[y|x])=\sum_{i}\Var(y|x=x_i)\Pr(x=x_i)=\E[\Var(y|x)]
+\end{equation}
+
+\textbf{P1.1(b)iii.}
+由全方差公式
+\begin{equation}
+\E[\Var(y|x)]=\Var(y)-\Var(\E[y|x])
+\end{equation}
+若$x$与$y$相互独立，$\E[y|x]=\E[y]$为常数，因此$\Var(\E[y|x])=0$,所以$\E[\Var(y|x)]=\Var(y)$,即
+\begin{equation}
+\MSE(\E[y])=\MSE(\E[y|x])
+\end{equation}
+若上式成立，可知$\E[y|x]=\E[y]$为常数，即
+\begin{equation}
+\forall i,\sum_{j}y_j\Pr(y=y_j|x=x_i)=\sum_{j}y_j\Pr(y=y_j)
+\end{equation}
+上式两边同时乘以$\E[f(x)]$可得
+\begin{equation}
+\sum_{i,j}f(x_i)y_j\Pr(x=x_i,y=y_j)=\left(\sum_i f(x_i)\Pr(x=x_i)\right)\left(\sum_j y_j\Pr(y=y_j)\right)
+\end{equation}
+即$\E[f(x)y]=\E[f(x)]\E[y]$
+所以$\forall f,\rho(f(x),y)=0$
+
+\textbf{1.2(a)}
+
+\begin{equation}
+\E[(y-ax-b)^2]==a^2\E[x^2]+\E[y^2]+b^2-2a\E[xy]-2b\E[y]+2ab\E[x]
+\end{equation}
+对$a,b$求偏导得：
+\begin{equation}
+\begin{cases}
+\E[x^2]a+\E[x]b=&\E[xy]\\
+\E[x]a+b=&\E[y]\\
+\end{cases}
+\end{equation}
+从而解出，并考虑到$\Var(x)=\Var(y)=\sqrt{\Var(x)\Var(y)}$:
+\begin{equation}
+a=\frac{\E[xy]-\E[x]\E[y]}{\Var(x)}=\rho(x,y)
+\end{equation}
+
+\textbf{1.2(b)}
+\begin{equation}
+x \perp y \Longleftrightarrow \Pr(x=x_i,y=y_j)=\Pr(x=x_i)\Pr(y=y_j)
+\end{equation}
+所以当$x$与$y$独立时
+\begin{align*}
+\E[f(x)g(y)]=&\sum_{i,j}f(x_i)g(y_j)\Pr(x=x_i,y=y_j)\\
+=&\sum_{i,j}f(x_i)g(y_j)\Pr(x=x_i)\Pr(y=y_j)\\
+=&\left(\sum_{i}f(x_i)\Pr(x=x_i)\right)\left(\sum_{i}g(y_j)\Pr(y=x_j)\right)\\
+=&\E[f(x)]\E[g(y)]
+\end{align*}
+即$\forall f,g,\rho(f(x),g(y))=0$
+
+另一方面，若$\forall f,g,\rho(f(x),g(y))=0$。取$f=1_{x=x_i},g=1_{y=y_j}$,则由
+$\E[f(x)g(y)]=\E[f(x)]\E[g(y)]$可以推出
+\begin{equation}
+\Pr(x=x_i,y=y_j)=\Pr(x=x_i)\Pr(y=y_j)
+\end{equation}
+所以$x$与$y$相互独立。
+\begin{equation}
+\end{equation}
+\begin{equation}
+\end{equation}
+\begin{equation}
+\end{equation}
+\begin{equation}
+\end{equation}
+
+\end{document}

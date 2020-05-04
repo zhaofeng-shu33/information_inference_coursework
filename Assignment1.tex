@@ -1,0 +1,211 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\input{iidef}
+\begin{document}
+\courseheader
+
+\newcounter{hwcnt}
+\setcounter{hwcnt}{1} % set to the times of Homework
+
+\begin{center}
+  \underline{\bf Homework \thehwcnt} \\
+\end{center}
+\begin{flushleft}
+  赵丰\hfill
+  \today
+\end{flushleft}
+\hrule
+
+\vspace{2em}
+
+\flushleft
+\rule{\textwidth}{1pt}
+\begin{itemize}
+\item {\bf Acknowledgments: \/} 
+  This coursework referes to wikipedia: \small{\url{https://en.wikipedia.org}}.
+
+\item {\bf Collaborators: \/}
+  I finish this template by myself.
+\end{itemize}
+\rule{\textwidth}{1pt}
+
+\vspace{2em}
+
+I use \texttt{enumerate} to generate answers for each question:
+
+\begin{enumerate}[label=\thehwcnt.\arabic*.]
+  \setlength{\itemsep}{3\parskip}
+
+  \item 
+    \begin{enumerate}[label=(\alph*)]
+    \item 
+    \begin{enumerate}[label=\roman*.]
+      \item 
+        \begin{equation}
+        \E[\rvx|\rvy]=\sum_{i} x_i\Pr(\rvx=x_i|\rvy)
+        \end{equation}
+        \begin{align*}
+        \E[\E[\rvx|\rvy \rvz]|\rvy] = & \E((\sum_{i} x_i \Pr(\rvx=x_i| \rvy \rvz))|\rvy)\\
+        =&\sum_j (\sum_{i} x_i \Pr(\rvx=x_i| \rvy,\rvz=z_j))\Pr(\rvz=z_j) \\
+        =&\sum_i x_i(\sum_{j} \Pr(\rvx=x_i| \rvy,\rvz=z_j))\Pr(\rvz=z_j) \\
+        =&\sum_i x_i(\sum_{j} \Pr(\rvx=x_i,\rvz=z_j| \rvy))\\
+        =&\sum_i x_i \Pr(\rvx=x_i| \rvy) \\
+        \end{align*}
+        所以
+        \begin{equation}
+        \E[\rvx|\rvy]=\E[\E[\rvx|\rvy \rvz]|\rvy]
+        \end{equation}
+
+      \item 
+        \begin{equation}
+        g(\rvy)\E[\rvx|\rvy]=\sum_{i} g(\rvy)x_i\Pr(\rvx=x_i|\rvy)=\E[xg(\rvy)|\rvy]
+        \end{equation}
+      
+      \item
+        \begin{align*}
+        \E[\rvx\E[\rvx|\rvy]]=&\E\left[\rvx\sum_{i} x_i\Pr(\rvx=x_i|\rvy)\right]\\
+        =&\sum_{j,k}(x_j\sum_{i} x_i\Pr(\rvx=x_i|\rvy=y_k))\Pr(\rvx=x_j,\rvy=y_k)\\
+        =&\sum_{i,j,k} x_i x_j \Pr(\rvx=x_i|\rvy=y_k)\Pr(\rvx=x_j,\rvy=y_k)
+        \end{align*}
+        \begin{align*}
+        \E[(\E[\rvx|\rvy])^2]=&\E\left[(\sum_{i} x_i\Pr(\rvx=x_i|\rvy))^2\right]\\
+        =&\sum_{k}(\sum_{i} x_i\Pr(\rvx=x_i|\rvy=y_k))^2 \Pr(\rvy=y_k)\\
+        =&\sum_{i,j,k} x_i x_j\Pr(\rvx=x_i|\rvy=y_k)\Pr(\rvx=x_j|\rvy=y_k)\Pr(\rvy=y_k)\\
+        =&\sum_{i,j,k} x_i x_j\Pr(\rvx=x_i|\rvy=y_k)\Pr(\rvx=x_j,\rvy=y_k)
+        \end{align*}
+        所以
+        \begin{equation}
+        \E[\rvx\E[\rvx|\rvy]]=\E[(\E[\rvx|\rvy])^2]
+        \end{equation}
+      \item
+        对离散型随机变量证明全方差公式(Law of Total Variance)
+        用到全期望公式(Law of Total Expectation)：
+        \begin{equation}
+        \E[\E[\rvx|\rvy]]=\E[\rvx]
+        \end{equation}
+
+        \begin{equation}
+        \Var(\rvx)=\sum_i (x_i-\E(\rvx))^2\Pr(\rvx=x_i)
+        \end{equation}
+
+        \begin{align*}
+        \Var(\rvx)=& \E[\rvx^2]-(\E[\rvx])^2\\
+        =& \E[\E[\rvx^2|\rvy]]-(\E[\E[\rvx|\rvy]])^2\\
+        =& \E[\Var[\rvx|\rvy]+(\E[\rvx|\rvy])^2]-(\E[\E[\rvx|\rvy]])^2\\
+        =& \E[\Var[\rvx|\rvy]]+\Var[\E[\rvx|\rvy]]\\
+        \end{align*}      
+    \end{enumerate}
+    \item 
+      \begin{enumerate}[label=\roman*.]
+        \item
+            \begin{equation}
+            \E[(\rvy-\alpha)^2]=\alpha^2-2\E[\rvy]\alpha+\E[\rvy]^2
+            \end{equation}
+            由二次函数极值的性质，当$\alpha=\E[\rvy]$时 $\E[(\rvy-\alpha)^2]$最小，
+            此时$\MSE(\hat{\rvy}=\E[\rvy])=\Var(\rvy)$
+        \item
+            \begin{equation}\label{eq:P11bii}
+            \E[(\rvy-\hat{\rvy})^2]=\sum_{i}\left(\sum_j (y_j-\hat{\rvy}(x_i))^2\Pr(\rvy=y_j|\rvx=x_i)\right)\Pr(\rvx=x_i)
+            \end{equation}
+            故只需对每一个$\Pr(\rvx=x_i)$，极小化
+            \begin{equation}
+            %\MSE(\hat{y})(x_i)=\argmin_{f:\mathcal{X}\rightarrow \mathbb{R}}
+            \left(\sum_j (y_j-f(x_i))^2\Pr(\rvy=y_j|\rvx=x_i)\right)
+            \end{equation}
+            目标函数可化为如下形式:
+            \begin{equation}
+            \mathcal{F}(f)=f(x_i)^2-2\E[\rvy|\rvx=x_i]f(x_i)+c,f:\mathcal{X}\rightarrow \mathbb{R}
+            \end{equation}
+
+            由第一问结论:
+            \begin{equation}
+            %\MSE(\hat{y})(x_i)
+            \argmin_{f:\mathcal{X}\rightarrow \mathbb{R}}\mathcal{F}(f)=\E[\rvy|\rvx=x_i]
+            \end{equation}
+            从而有
+            \begin{equation}
+            \argmin_{f:\mathcal{X}\rightarrow \mathbb{R}}\E[(\rvy-f(\rvx))^2]=\E[\rvy|\rvx]
+            \end{equation}
+            由\eqref{eq:P11bii}式得估计的MSE为
+            \begin{equation}
+            \MSE(\E[\rvy|\rvx])=\sum_{i}\Var(\rvy|\rvx=x_i)\Pr(\rvx=x_i)=\E[\Var(\rvy|\rvx)]
+            \end{equation}
+        \item
+            由全方差公式
+            \begin{equation}
+            \E[\Var(\rvy|\rvx)]=\Var(\rvy)-\Var(\E[\rvy|\rvx])
+            \end{equation}
+            若$\rvx$与$\rvy$相互独立，$\E[\rvy|\rvx]=\E[\rvy]$为常数，因此$\Var(\E[\rvy|\rvx])=0$,所以$\E[\Var(\rvy|\rvx)]=\Var(\rvy)$,即
+            \begin{equation}
+            \MSE(\E[\rvy])=\MSE(\E[\rvy|\rvx])
+            \end{equation}
+            若上式成立，可知$\E[\rvy|\rvx]=\E[\rvy]$为常数，即
+            \begin{equation}
+            \forall i,\sum_{j}y_j\Pr(\rvy=y_j|\rvx=x_i)=\sum_{j}y_j\Pr(\rvy=y_j)
+            \end{equation}
+            上式两边同时乘以$\E[f(\rvx)]$可得
+            \begin{equation}
+            \sum_{i,j}f(x_i)y_j\Pr(\rvx=x_i,\rvy=y_j)=\left(\sum_i f(x_i)\Pr(\rvx=x_i)\right)\left(\sum_j y_j\Pr(\rvy=y_j)\right)
+            \end{equation}
+            即$\E[f(\rvx)\rvy]=\E[f(\rvx)]\E[\rvy]$
+            所以$\forall f,\rho(f(\rvx),\rvy)=0$                
+      \end{enumerate}      
+    \end{enumerate}
+\item 
+  \begin{enumerate}[label=(\alph*)]
+  \item
+    \begin{equation}
+    \E[(\rvy-a\rvx-b)^2]==a^2\E[\rvx^2]+\E[\rvy^2]+b^2-2a\E[\rvx\rvy]-2b\E[\rvy]+2ab\E[\rvx]
+    \end{equation}
+    对$a,b$求偏导得：
+    \begin{equation}
+    \begin{cases}
+    \E[\rvx^2]a+\E[\rvx]b=&\E[\rvx\rvy]\\
+    \E[\rvx]a+b=&\E[\rvy]\\
+    \end{cases}
+    \end{equation}
+    从而解出，并考虑到$\Var(\rvx)=\Var(\rvy)=\sqrt{\Var(\rvx)\Var(\rvy)}$:
+    \begin{equation}
+    a=\frac{\E[\rvx\rvy]-\E[\rvx]\E[\rvy]}{\Var(\rvx)}=\rho(\rvx,\rvy)
+    \end{equation}
+  \item
+    \begin{equation}
+    \rvx \perp \rvy \Longleftrightarrow \Pr(\rvx=x_i,\rvy=y_j)=\Pr(\rvx=x_i)\Pr(\rvy=y_j)
+    \end{equation}
+    所以当$\rvx$与$\rvy$独立时
+    \begin{align*}
+    \E[f(\rvx)g(\rvy)]=&\sum_{i,j}f(x_i)g(\rvy_j)\Pr(\rvx=x_i,\rvy=y_j)\\
+    =&\sum_{i,j}f(x_i)g(y_j)\Pr(\rvx=x_i)\Pr(\rvy=y_j)\\
+    =&\left(\sum_{i}f(x_i)\Pr(\rvx=x_i)\right)\left(\sum_{i}g(y_j)\Pr(\rvy=x_j)\right)\\
+    =&\E[f(\rvx)]\E[g(\rvy)]
+    \end{align*}
+    即$\forall f,g,\rho(f(\rvx),g(\rvy))=0$
+
+    另一方面，若$\forall f,g,\rho(f(\rvx),g(\rvy))=0$。取$f=1_{\rvx=x_i},g=1_{\rvy=y_j}$,则由
+    $\E[f(\rvx)g(\rvy)]=\E[f(\rvx)]\E[g(\rvy)]$可以推出
+    \begin{equation}
+    \Pr(\rvx=x_i,\rvy=y_j)=\Pr(\rvx=x_i)\Pr(\rvy=y_j)
+    \end{equation}
+    所以$\rvx$与$\rvy$相互独立。
+  \end{enumerate}
+  \item Thanks to 陆石, who gives me this template.
+  
+
+  \end{enumerate}
+
+\end{document}
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:

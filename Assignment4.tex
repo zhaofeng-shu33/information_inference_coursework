@@ -1,0 +1,189 @@
+% Homework template for Inference and Information
+% UPDATE: September 26, 2017 by Xiangxiang
+\documentclass[a4paper]{article}
+\usepackage{amsmath, amssymb, amsthm}
+% amsmath: equation*, amssymb: mathbb, amsthm: proof
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % toprule
+\usepackage[mathcal]{eucal}
+\input{iidef}
+\begin{document}
+\courseheader
+
+\newcounter{hwcnt}
+\setcounter{hwcnt}{4} % set to the times of Homework
+
+\begin{center}
+  \underline{\bf Homework \thehwcnt} \\
+\end{center}
+\begin{flushleft}
+  赵丰\hfill
+  \today
+\end{flushleft}
+\hrule
+
+\vspace{2em}
+
+\flushleft
+\rule{\textwidth}{1pt}
+\begin{itemize}
+\item {\bf Acknowledgments: \/} 
+  This coursework referes to wikipedia: \small{\url{https://en.wikipedia.org}}.
+
+\item {\bf Collaborators: \/}
+  I finish this coursework by myself.
+\end{itemize}
+\rule{\textwidth}{1pt}
+
+\vspace{2em}
+
+I use \texttt{enumerate} to generate answers for each question:
+
+\begin{enumerate}[label=\thehwcnt.\arabic*.]
+  \setlength{\itemsep}{3\parskip}
+
+  \item 
+  \begin{align*}
+   \E[\textsf{m}_n]=&\E[\frac{1}{n} \sum_{i=1}^n \rvx_i]\\
+   =& \frac{1}{n}\sum_{i=1}^n \E[\rvx_i]\\
+   =& \mu
+  \end{align*}
+  因此$\textsf{m}_n$是$\mu$的无偏估计量。
+  
+  由$\rvx_i$与$rvx_j(i\neq j)$相互独立$\Rightarrow$
+  \[
+  E[(\rvx_i-\mu)(\rvx_j-\mu)]=E[\rvx_i-\mu][\rvx_j-\mu]=0
+  \]
+  \begin{align*}
+   \E[(\textsf{m}_n-\mu)^2]=&\E\left[\left(\frac{1}{n} \sum_{i=1}^n (\rvx_i-\mu)\right)^2\right]\\
+   =& \frac{1}{n^2}\sum_{i=1}^n \E[(\rvx_i-\mu)^2]+\frac{1}{n^2}\sum_{i,j=1,i\neq j}^n E[(\rvx_i-\mu)(\rvx_j-\mu)]\\
+   =& \frac{\sigma^2}{n}
+  \end{align*}  
+  \begin{align*}
+   \textsf{v}_n=&\frac{1}{n-1} \sum_{i=1}^n (\rvx_i-\mu+\mu-\textsf{m}_n)^2\\
+   =& \frac{1}{n-1} \sum_{i=1}^n (\rvx_i-\mu+\mu-\textsf{m}_n)^2\\
+   =& \frac{1}{n-1}\left(\sum_{i=1}^n (x_i-\mu)^2-n(\textsf{m}_n-\mu)^2\right)\Rightarrow
+  \end{align*}
+  \begin{align*}
+   \E[\textsf{v}_n]=&\frac{1}{n-1}\left(\sum_{i=1}^n \E[(x_i-\mu)^2]-n\E[(\textsf{m}_n-\mu)^2]\right)\\
+   =& \frac{1}{n-1}(n\sigma^2-\sigma^2)\\
+   =& \sigma^2
+  \end{align*}  
+  因此 $\textsf{v}_n$ 是 $\sigma^2$ 的无偏估计量。
+  
+  \item 
+  \begin{enumerate}[label=(\alph*)]
+  \item 
+  $\hat{x}_{\textrm{BLS}}(\rvy)=\rvy^{\frac{1}{3}}$
+    
+  \item
+  由LLS估计的公式：
+  \[
+   \hat{\rvx}_{\textrm{LLS}}(\rvy)=\mu_{\rvx} + \Lambda_{\rvx\rvy}\Lambda^{-1}_{\rvy}(\rvy-\mu_{\rvy})
+  \]
+  代入   $\mu_{\rvx}=g_1, \mu_{\rvy}=g_3,\Lambda_{\rvy}=g_6-g_3^2,\Lambda_{\rvx\rvy}=g_4-g_1g_3$
+  所以
+  \[
+  \hat{\rvx}_{\textrm{LLS}}(\rvy) = g_1+\frac{g_4-g_1g_3}{g_6-g_3^2}(\rvy-g_3)
+  \]
+  因为$x$的密度函数关于$0$对称，$g_1=g_3=0\Rightarrow \hat{\rvx}_{\textrm{LLS}}(\rvy) = \frac{g_4}{g_6}\rvy$
+  \item 
+%  设$\urvy=[\rvy,\rvz_1,\rvz_2]^\TT$  
+%  沿用LLS估计公式的向量形式：
+%  \[
+%   \hat{\rvx}_{\textrm{LLS}}(\urvy)=\mu_{\rvx} + \bm{\Lambda}_{\rvx\urvy}\bm{\Lambda}^{-1}_{\urvy}(\urvy-\mu_{\urvy})
+%  \]
+%  可以求出$\mu_{\urvy}=[g_3,g_1,g_1]^\TT$,
+%  \[
+%  \bm{\Lambda}_{\urvy}=\begin{bmatrix}
+%  g_6-g_3^2 & g_4-g_3g_1 & g_4-g_3g_1 \\
+%  g_4-g_3g_1 & g_2-g_1^2+1 & g_2-g_1^2-2 \\
+%  g_4-g_3g_1 & g_2-g_1^2-2 & g_2-g_1^2+4
+%  \end{bmatrix}
+%  \]
+%  $\bm{\Lambda}_{\rvx\urvy}=[g_4-g_1g_3,g_2,g_2]$,
+%  所以有：
+%    \[
+%   \hat{\rvx}_{\textrm{LLS}}(\urvy)=g_1+ [g_4-g_1g_3,g_2,g_2]
+%   \begin{bmatrix}
+%  g_6-g_3^2 & g_4-g_3g_1 & g_4-g_3g_1 \\
+%  g_4-g_3g_1 & g_2-g_1^2+1 & g_2-g_1^2-2 \\
+%  g_4-g_3g_1 & g_2-g_1^2-2 & g_2-g_1^2+4
+%  \end{bmatrix}^{-1}\begin{bmatrix}
+%  \rvy-g_3 \\
+%  \rvz_1-g_1\\
+%  \rvz_2-g_1
+%  \end{bmatrix}
+%  \]
+  \[
+   \hat{\rvx}_{\textrm{LLS}}(\urvy)=\frac{2}{3} \rvz_1 + \frac{1}{3} \rvz_2
+  \]
+   并且$\MSE[\hat{\rvx}_{\textrm{LLS}}]=0$
+  \item $\rvx$的后验概率是各以$\frac{1}{2}$概率等于$\pm \sqrt{\mathsf{v}}$,
+  所以 $\hat{x}_{\textrm{BLS}}(\mathsf{v})=0$
+  \end{enumerate} 
+  \item
+  \begin{enumerate}[label=(\alph*)]
+  \item 反设存在这样的估计量 $\hat{x}(\rvy)$,那么$\forall x>0$,下式成立：
+  \[
+  \int_{\mathbb{R}}\hat{x}(y)p_{\rvy}(y;x)dy=x
+  \]
+  代入题目中已知的概率分布得:
+  \[
+  \int_0^{\frac{1}{x}} \hat{x}(y)dy = 1 
+  \]
+  由于$x$是任意的，可以推出$\hat{x}(y)$在正半轴任意区间积分为0，取正半轴的左端点趋近0得矛盾(积分为零不为1)。因此对于给定的分布
+  不存在关于$x$的无偏估计量。
+
+  \item
+    存在 $ \hat{x}(\rvy)=2\rvy$, 
+    
+    \[
+    \E[\hat{x}(\rvy)] = \frac{1}{x}\int_0^{x} 2 y d y = x
+    \]
+    因此 $\hat{x}(\rvy)$ 是无偏的。
+    又 $\Var[\hat{x}(\rvy)]=x^2$,恰好达到CRB下界 $\frac{1}{J_{\rvy}(x)}$
+    其中$J_{\rvy}(x)$按定义式计算：
+    \[
+      J_{\rvy}(x) = \E\left[\left(\frac{\partial}{\partial x} \ln p_{\rvy}(y;x) \right)^2\right]
+    \]
+    
+    \end{enumerate}
+  \item $x[0],x[1],\dots,x[N-1]$的似然函数为：
+  
+      \[
+      \ln p_{\urvx}(\urvx;a)=\frac{-1}{2\sigma^2}\sum_{i=0}^{N-1} (x[i]-ar^i)^2+c
+      \]
+  
+      \begin{align*}
+      J_{\urvx}(a)=&-\E[\frac{\partial^2}{\partial a^2}\ln p_{\urvx}(\urvx;a)]\\
+      = & \frac{1}{\sigma^2}\sum_{i=0}^{N-1} r^{2i}
+      \end{align*}
+  \[
+  \hat{a}(\urvx)=\frac{\sum_{i=0}^{N-1} x[i] r^i}{\sum_{i=0}^{N-1} r^{2i}}
+  \]
+  可以验证
+  \[
+  \Var[\hat{a}(\urvx)]=\frac{1}{J_{\urvx}(a)}
+  \]
+  因此构造的$\hat{a}(\urvx)$ 是有效估计量。
+  $c$是与$a$无关的常数。
+  \item Thanks to 陆石, who gives me this template.
+  
+
+  \end{enumerate}
+
+\end{document}
+\begin{equation}
+\end{equation}
+
+%%% Local Variables:
+%%% mode: late\rvx
+%%% TeX-master: t
+%%% End:
